@@ -7,7 +7,6 @@ import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPADeleteClause;
