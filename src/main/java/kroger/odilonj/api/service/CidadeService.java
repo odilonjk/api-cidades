@@ -51,6 +51,12 @@ public class CidadeService {
 //				.fetch();
 	}
 
+	public Cidade find(Integer ibgeId) {
+		return new JPAQuery<Cidade>(em).from(cidade)
+			.where(cidade.ibgeId.eq(ibgeId))
+			.fetchOne();
+	}
+	
 	public void delete(Integer ibgeId) {
 		new JPADeleteClause(em, cidade)
 			.where(cidade.ibgeId.eq(ibgeId))
@@ -58,7 +64,15 @@ public class CidadeService {
 	}
 
 	public void register(Cidade cidade) {
-		
+		em.persist(cidade);
+	}
+	
+	public List<String> findCitysByState(String uf) {
+		return new JPAQuery<>(em).from(cidade)
+			.select(cidade.name)
+			.where(cidade.uf.toLowerCase().eq(uf.toLowerCase()))
+			.orderBy(cidade.name.asc())
+			.fetch();
 	}
 	
 }
