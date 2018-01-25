@@ -13,6 +13,8 @@ import javax.persistence.PersistenceContext;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 
@@ -137,6 +139,31 @@ public class CidadeService {
 
 	public Long findTotalRecordsByColumn(String column) {
 		return null;
+	}
+	
+	public List<Object> search(String column, String filter) {
+		PathBuilder<Object> path = getPath(column);
+		return new JPAQuery<>(em).from(cidade)
+			.select(path)
+			.fetch();
+	}
+
+	private PathBuilder<Object> getPath(String column) {
+		PathBuilder<Cidade> entityPath = new PathBuilder(Cidade.class, "cidade"); 
+		return entityPath.get(getProperty(column));
+	}
+
+	private String getProperty(String column) {
+		switch(column) {
+			case "ibge_id":
+				return "ibgeId";
+			case "no_accents":
+				return "no_accents";
+			case "alternative_names":
+				return "alternativeNames";
+			default:
+				return column;
+		}
 	}
 	
 }

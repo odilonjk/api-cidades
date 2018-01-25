@@ -104,4 +104,9 @@ public class CidadeRest {
 		return Response.ok(service.findMoreDistant()).build();
 	}
 	
+	@GET
+	@Path("/consulta/{column}/{filter}")
+	public Response search(@PathParam(value = "column") String column, @PathParam(value = "filter") String filter) {
+		return Response.ok(service.search(column, filter)).build();
+	}
 }
