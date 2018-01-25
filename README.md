@@ -37,12 +37,12 @@ Para importar as informações do arquivo CSV é necessário executar o script a
 ## Como utilizar a API?
     
     
-Retorna informações da cidade de acordo com o IBGE informado.
+Utilizando o método GET, retorna informações da cidade de acordo com o IBGE informado.
+Para deletar uma cidade, basta utilizar o método DELETE.
     
     <host>:<port>/api-cidades/rest/cidade/<ibge-id>
 
 Utilizando método POST, grava uma nova cidade.
-Para deletar uma cidade, basta utilizar o método DELETE.
     
     <host>:<port>/api-cidades/rest/cidade
 
@@ -58,3 +58,6 @@ Retorna o nome de todas cidades do estado passado como parâmetro.
 
     <host>:<port>/api-cidades/rest/cidades-por-estado/<uf>
 
+Retorna o total de registros.
+
+    <host>:<port>/api-cidades/rest/total-de-registros

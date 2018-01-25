@@ -69,8 +69,8 @@ public class CidadeRest {
 	}
 	
 	@DELETE
-	@Path("/cidade")
-	public Response delete(Integer ibgeId) {
+	@Path("/cidade/{ibgeId}")
+	public Response delete(@PathParam(value = "ibgeId") Integer ibgeId) {
 		service.delete(ibgeId);
 		return Response.ok().build();
 	}
@@ -86,6 +86,10 @@ public class CidadeRest {
 		}
 	}
 	
-	
+	@GET
+	@Path("/cidade/total-registros")
+	public Response findTotalRecords() {
+		return Response.ok(service.findTotalRecords()).build();
+	}
 	
 }

@@ -45,10 +45,9 @@ public class CidadeService {
 	}
 
 	public Long findTotalRecords() {
-		return null;
-//		return new JPAQuery<>(em).from(cidade)
-//				.select(cidade.count())
-//				.fetch();
+		return new JPAQuery<>(em).from(cidade)
+				.select(cidade.count())
+				.fetchOne();
 	}
 
 	public Cidade find(Integer ibgeId) {
