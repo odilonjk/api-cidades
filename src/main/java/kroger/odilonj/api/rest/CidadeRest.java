@@ -39,7 +39,7 @@ public class CidadeRest {
 	}
 
 	@GET
-	@Path("/total-por-estados")
+	@Path("/cidade/estado/totais")
 	public Response findTotalByStates() {
 		try {
 			return Response.ok(service.findTotalByStates()).build();
@@ -76,7 +76,7 @@ public class CidadeRest {
 	}
 	
 	@GET
-	@Path("/cidades-por-estado/{uf}")
+	@Path("/cidade/estado/{uf}")
 	public Response findCitiesByState(@PathParam(value = "uf") String uf) {
 		try {
 			return Response.ok(service.findCitiesByState(uf)).build();
@@ -87,9 +87,15 @@ public class CidadeRest {
 	}
 	
 	@GET
-	@Path("/cidade/total-registros")
+	@Path("/total/registros")
 	public Response findTotalRecords() {
 		return Response.ok(service.findTotalRecords()).build();
+	}
+
+	@GET
+	@Path("/total/{column}")
+	public Response findTotalRecordsByColumn(@PathParam(value = "column") String column) {
+		return Response.ok(service.findTotalRecordsByColumn(column)).build();
 	}
 	
 	@GET
