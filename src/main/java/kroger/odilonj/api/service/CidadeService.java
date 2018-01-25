@@ -19,7 +19,10 @@ import com.querydsl.jpa.impl.JPAQuery;
 
 import kroger.odilonj.api.entity.Cidade;
 import kroger.odilonj.api.entity.QCidade;
+import kroger.odilonj.api.enums.ColumnType;
+import kroger.odilonj.api.utils.QueryUtil;
 import kroger.odilonj.api.vo.CidadeVO;
+import kroger.odilonj.api.vo.ColumnVO;
 import kroger.odilonj.api.vo.DistanceVO;
 
 
@@ -32,11 +35,15 @@ public class CidadeService {
 	
 	private QCidade cidade = QCidade.cidade;
 
-	public List<Cidade> findCapitals() {
-		return new JPAQuery<Cidade>(em).from(cidade)
-			.where(cidade.capital.isTrue())
-			.orderBy(cidade.name.asc())
-			.fetch();
+	public List<Cidade> findCapitals(String order) throws Exception {
+		JPAQuery<Cidade> query = new JPAQuery<Cidade>(em).from(cidade)
+			.where(cidade.capital.isTrue());
+		if(order.equals("asc"))
+			return query.orderBy(cidade.name.asc()).fetch();
+		else if(order.equals("desc"))
+			return query.orderBy(cidade.name.desc()).fetch();
+		else
+			throw new Exception("Ordenação inválida. Tipos aceitos: asc, desc.");
 	}
 
 	public HashMap<String, Long> findTotalByStates() {
@@ -132,41 +139,26 @@ public class CidadeService {
 		double ciRadiansLat = Math.toRadians(ci.getLat());
 		double deltaRadiansLongitude = Math.toRadians(c.getLon() - c.getLon());
 		return Math.acos(Math.cos(cRadiansLat) * Math.cos(ciRadiansLat)
-		* Math.cos(deltaRadiansLongitude) + Math.sin(cRadiansLat)
-		* Math.sin(ciRadiansLat)) * 6371;
+			* Math.cos(deltaRadiansLongitude) + Math.sin(cRadiansLat)
+			* Math.sin(ciRadiansLat)) * 6371;
 	}
 
 	public Long findTotalRecordsByColumn(String column) {
-		PathBuilder<Object> path = getPath(column);
+		PathBuilder<Object> path = QueryUtil.getPath(column);
 		return new JPAQuery<>(em).from(cidade)
 				.distinct()
 				.select(path)
 				.fetchCount();
 	}
 	
-	public List<Object> search(String column, String filter) {
-		PathBuilder<Object> path = getPath(column);
-		return new JPAQuery<>(em).from(cidade)
-			.select(path)
-			.fetch();
+	public List<Object> search(String column, String filter) throws Exception {
+		ColumnVO columnVO = QueryUtil.getColumnVO(column);
+		 JPAQuery<Object> query = new JPAQuery<>(em).from(cidade)
+			.select(QueryUtil.getPath(columnVO.getName()));
+		
+		 if(columnVO.getType().equals(ColumnType.STRING)) 
+			 return query.where(QueryUtil.getStringPath(columnVO.getName()).containsIgnoreCase(filter)).fetch();
+		 return query.where(QueryUtil.getPath(columnVO.getName()).eq(Integer.valueOf(filter))).fetch();
 	}
 
-	private PathBuilder<Object> getPath(String column) {
-		PathBuilder<Cidade> entityPath = new PathBuilder<>(Cidade.class, "cidade"); 
-		return entityPath.get(getProperty(column));
-	}
-
-	private String getProperty(String column) {
-		switch(column) {
-			case "ibge_id":
-				return "ibgeId";
-			case "no_accents":
-				return "no_accents";
-			case "alternative_names":
-				return "alternativeNames";
-			default:
-				return column;
-		}
-	}
-	
 }

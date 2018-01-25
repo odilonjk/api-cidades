@@ -28,13 +28,13 @@ public class CidadeRest {
 	private CidadeService service;
 	
 	@GET
-	@Path("/capitais")
-	public Response findCapitals() {
+	@Path("/capitais/{order}")
+	public Response findCapitals(@PathParam(value = "order") String order) {
 		try {
-			return Response.ok(service.findCapitals()).build();
+			return Response.ok(service.findCapitals(order)).build();
 		}
 		catch (Exception e) {
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(400).entity(e.getMessage()).build();
 		}
 	}
 
@@ -45,7 +45,7 @@ public class CidadeRest {
 			return Response.ok(service.findTotalByStates()).build();
 		}
 		catch (Exception e) {
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(400).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -56,7 +56,7 @@ public class CidadeRest {
 			return Response.ok(service.find(ibgeId)).build();
 		}
 		catch (Exception e) {
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(400).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -64,15 +64,25 @@ public class CidadeRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/cidade")
 	public Response register(Cidade cidade) {
-		service.register(cidade);
-		return Response.ok().build();
+		try {
+			service.register(cidade);
+			return Response.ok().build();
+		}
+		catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 	
 	@DELETE
 	@Path("/cidade/{ibgeId}")
 	public Response delete(@PathParam(value = "ibgeId") Integer ibgeId) {
-		service.delete(ibgeId);
-		return Response.ok().build();
+		try {
+			service.delete(ibgeId);
+			return Response.ok().build();
+		}
+		catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 	
 	@GET
@@ -82,37 +92,62 @@ public class CidadeRest {
 			return Response.ok(service.findCitiesByState(uf)).build();
 		}
 		catch (Exception e) {
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(400).entity(e.getMessage()).build();
 		}
 	}
 	
 	@GET
 	@Path("/total/registros")
 	public Response findTotalRecords() {
-		return Response.ok(service.findTotalRecords()).build();
+		try {
+			return Response.ok(service.findTotalRecords()).build();
+		}
+		catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 
 	@GET
 	@Path("/total/{column}")
 	public Response findTotalRecordsByColumn(@PathParam(value = "column") String column) {
-		return Response.ok(service.findTotalRecordsByColumn(column)).build();
+		try {
+			return Response.ok(service.findTotalRecordsByColumn(column)).build();
+		}
+		catch(Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 	
 	@GET
 	@Path("/estados-extremos")
 	public Response findExtremeStates() {
-		return Response.ok(service.findExtremeStates()).build();
+		try {
+			return Response.ok(service.findExtremeStates()).build();
+		}
+		catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 	
 	@GET
 	@Path("/cidades-mais-distantes")
 	public Response findMoreDistantCities() {
-		return Response.ok(service.findMoreDistant()).build();
+		try {
+			return Response.ok(service.findMoreDistant()).build();
+		}
+		catch (Exception e) {
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 	
 	@GET
 	@Path("/consulta/{column}/{filter}")
 	public Response search(@PathParam(value = "column") String column, @PathParam(value = "filter") String filter) {
-		return Response.ok(service.search(column, filter)).build();
+		try {
+			return Response.ok(service.search(column, filter)).build();
+		}
+		catch (Exception e){
+			return Response.status(400).entity(e.getMessage()).build();
+		}
 	}
 }

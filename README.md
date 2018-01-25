@@ -46,9 +46,9 @@ Utilizando método POST, grava uma nova cidade.
     
     <host>:<port>/api-cidades/rest/cidade
 
-Retorna a lista de todas capitais cadastradas.
+Retorna a lista ordenada de todas capitais cadastradas.
 
-    <host>:<port>/api-cidades/rest/capitais
+    <host>:<port>/api-cidades/rest/capitais/<asc> ou <desc>
 
 Retorna a sigla do estado com o seu total de cidades.
     
@@ -73,8 +73,6 @@ Retorna quilometragem e nome das duas cidades mais distantes.
 Retorna registros totais distintos da coluna. 
 	
 	<host>:<port>/api-cidades/rest/total/<coluna>
-
-### Ainda não implementado:
 
 Retorna consulta de coluna específica com filtro.
 
