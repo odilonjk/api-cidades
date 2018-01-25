@@ -79,7 +79,7 @@ public class CidadeRest {
 	@Path("/cidades-por-estado/{uf}")
 	public Response findCitiesByState(@PathParam(value = "uf") String uf) {
 		try {
-			return Response.ok(service.findCitysByState(uf)).build();
+			return Response.ok(service.findCitiesByState(uf)).build();
 		}
 		catch (Exception e) {
 			return Response.status(500).entity(e.getMessage()).build();
@@ -90,6 +90,18 @@ public class CidadeRest {
 	@Path("/cidade/total-registros")
 	public Response findTotalRecords() {
 		return Response.ok(service.findTotalRecords()).build();
+	}
+	
+	@GET
+	@Path("/estados-extremos")
+	public Response findExtremeStates() {
+		return Response.ok(service.findExtremeStates()).build();
+	}
+	
+	@GET
+	@Path("/cidades-mais-distantes")
+	public Response findMoreDistantCities() {
+		return Response.ok(service.findMoreDistant()).build();
 	}
 	
 }

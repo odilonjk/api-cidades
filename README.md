@@ -61,3 +61,21 @@ Retorna o nome de todas cidades do estado passado como parâmetro.
 Retorna o total de registros.
 
     <host>:<port>/api-cidades/rest/total-de-registros
+    
+Retorna os estados com maior e menor número de cidades.
+
+    <host>:<port>/api-cidades/rest/estados-extremos
+    
+Retorna quilometragem e nome das duas cidades mais distantes.
+
+    <host>:<port>/api-cidades/rest/cidades-mais-distantes
+    
+### Ainda não implementado:
+
+Retorna consulta de coluna específica com filtro.
+
+	<host>:<port>/api-cidades/rest/consulta/<coluna>/<filtro>
+	
+Retorna registros totais distintos da coluna. 
+	
+	<host>:<port>/api-cidades/rest/totais/<coluna>
