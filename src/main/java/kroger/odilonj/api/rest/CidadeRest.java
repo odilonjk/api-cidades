@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 import kroger.odilonj.api.entity.Cidade;
 import kroger.odilonj.api.service.CidadeService;
 
-@Path("/cidade")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class CidadeRest {
 	
@@ -50,7 +50,7 @@ public class CidadeRest {
 	}
 	
 	@GET
-	@Path("/{ibgeId}")
+	@Path("/cidade/{ibgeId}")
 	public Response find(@PathParam(value = "ibgeId") Integer ibgeId) {
 		try {
 			return Response.ok(service.find(ibgeId)).build();
@@ -62,12 +62,14 @@ public class CidadeRest {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/cidade")
 	public Response register(Cidade cidade) {
 		service.register(cidade);
 		return Response.ok().build();
 	}
 	
 	@DELETE
+	@Path("/cidade")
 	public Response delete(Integer ibgeId) {
 		service.delete(ibgeId);
 		return Response.ok().build();

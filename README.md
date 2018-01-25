@@ -48,13 +48,13 @@ Para deletar uma cidade, basta utilizar o método DELETE.
 
 Retorna a lista de todas capitais cadastradas.
 
-    <host>:<port>/api-cidades/rest/cidade/capitais
+    <host>:<port>/api-cidades/rest/capitais
 
 Retorna a sigla do estado com o seu total de cidades.
     
-    <host>:<port>/api-cidades/rest/cidade/total-por-estados
+    <host>:<port>/api-cidades/rest/total-por-estados
 
 Retorna o nome de todas cidades do estado passado como parâmetro.
 
-    <host>:<port>/api-cidades/rest/cidade/cidades-por-estado/<uf>
+    <host>:<port>/api-cidades/rest/cidades-por-estado/<uf>
 
